@@ -3,7 +3,7 @@ import uuid
 import ctypes
 
 from concurrent.futures import ThreadPoolExecutor
-from colorama import Fore, Style
+from colorama import Fore, Style , init
 from datetime import datetime
 from threading import Lock
 from traceback import print_exc
@@ -24,7 +24,7 @@ class Logger:
         ts = f"{Fore.RESET}{Fore.LIGHTBLACK_EX}{datetime.now().strftime('%H:%M:%S')}{Fore.RESET}"
         return input(Style.BRIGHT + ts + color + f" [{tag}] " + Fore.RESET + content + Fore.RESET)
 def update_title():
-    ctypes.windll.kernel32.SetConsoleTitleW(f"Opera GX Promo Gen By Notlit | Generated : {genned}") # dont change by notlit thing pls u can do anything else you want
+    ctypes.windll.kernel32.SetConsoleTitleW(f"Opera GX Promo Gen By Notlit | Generated : {genned}") 
 class O:
     def __init__(self,proxy) -> None:
         self.session = tls_client.Session(
@@ -65,6 +65,7 @@ def gnr():
         except:
             print_exc()
 if __name__=="__main__":
+    init()
     t = int(Logger.Ask("ENTER","Enter Amount of Threads -> ",Fore.LIGHTBLUE_EX))
     with ThreadPoolExecutor(max_workers=t+1) as exc:
         for i in range(t):
