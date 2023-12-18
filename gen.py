@@ -1,13 +1,21 @@
-import tls_client
+import os
 import uuid
 import ctypes
 
 from concurrent.futures import ThreadPoolExecutor
-from colorama import Fore, Style , init
 from datetime import datetime
 from threading import Lock
 from traceback import print_exc
 from random import choice
+try:
+    import tls_client
+    from colorama import Fore, Style , init
+except ModuleNotFoundError:
+    os.system("pip install tls_client")
+    os.system("pip install colorama")
+    os.system("cls")
+    import tls_client
+    from colorama import Fore, Style , init
 
 lock = Lock()
 genned = 0
