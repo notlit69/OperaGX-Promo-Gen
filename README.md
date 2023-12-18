@@ -1,6 +1,6 @@
 # OperaGX-Promo-Gen
 
-## THIS REPO IS ONLY FOR EDUCATIONAL PURPOSES
+## THIS REPOSITERY IS ONLY FOR EDUCATIONAL PURPOSES.
 
 # Usage:
 Put Proxies in proxies.txt. Leave empty for Proxyless\
