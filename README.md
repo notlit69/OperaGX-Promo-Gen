@@ -1,3 +1,6 @@
+# 24-01-2024 
+Opera finally started checking headers so I added headers. It should work now.
+
 # OperaGX-Promo-Gen
 
 ## THIS REPOSITERY IS ONLY FOR EDUCATIONAL PURPOSES.
