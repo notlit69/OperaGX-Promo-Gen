@@ -1,4 +1,4 @@
-29-02-2024 : This gen is now patched. Opera Gx changed endpoints and made making a opera gx account necessary.
+29-02-2024 : This gen is now patched. Opera Gx changed endpoints and made having a opera gx account necessary.
 
 24-01-2024 : Opera finally started checking headers so I added headers. It should work now.
 
