@@ -16,4 +16,5 @@ Open a command prompt in the folder and run python main.py
 
 
 # Contakt:
-Discord : notlit12
+Discord : notlit12 [ Do not dm me for help]
+
