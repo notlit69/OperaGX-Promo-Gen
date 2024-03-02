@@ -5,6 +5,8 @@ import json
 import time
 import capsolver
 import ctypes
+import time
+import string
 
 from concurrent.futures import ThreadPoolExecutor
 from colorama import Fore, Style,init
@@ -27,17 +29,17 @@ class Logger:
     def Sprint(tag: str, content: str, color):
         ts = f"{Fore.RESET}{Fore.LIGHTBLACK_EX}{datetime.now().strftime('%H:%M:%S')}{Fore.RESET}"
         with lock:
-            print(Style.BRIGHT + ts + color + f" [{tag}] " + Fore.RESET + content + Fore.RESET)
+            print(f"{Style.BRIGHT}{ts}{color} [{tag}] {Fore.RESET}{content}{Fore.RESET}")
     @staticmethod
     def Ask(tag: str, content: str, color):
         ts = f"{Fore.RESET}{Fore.LIGHTBLACK_EX}{datetime.now().strftime('%H:%M:%S')}{Fore.RESET}"
-        return input(Style.BRIGHT + ts + color + f" [{tag}] " + Fore.RESET + content + Fore.RESET)
+        return input(f"{Style.BRIGHT}{ts}{color} [{tag}] {Fore.RESET}{content}{Fore.RESET}")
 
 class Opera:
     def __init__(self,proxy) -> None:
         self.session = requests.session()
         self.session.proxies = proxy 
-        self.email = fkr.first_name() + f"{str(random.randint(100000,200000))}@" + \
+        self.email = ''.join(random.choices(string.ascii_letters,k=10))+str(int(round(time.time())))+"@" + \
                         choice(['gmail.com','outlook.com','yahoo.com','hotmail.com'])
         self.user = self.email.split("@")[0]
         self.session.headers={
@@ -58,12 +60,14 @@ class Opera:
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
 }
     def request(self,*args,**kwargs):
-        while True:
+        for x in range(50):
             try:
                 return self.session.request(*args,**kwargs)
             except:
                 # print_exc()
                 continue
+        else:
+            raise Exception("Failed To Execute Request After 10x Retries!")
     def get_soln(self):
         try:
             soln = capsolver.solve({
@@ -83,7 +87,7 @@ class Opera:
         if not soln:
             return
 
-        Logger.Sprint("CAPTCHA","Successfully Solved in {}s".format("%.2f" % (time.time()-start)),Fore.LIGHTCYAN_EX)
+        Logger.Sprint("CAPTCHA","Successfully Solved in {}s".format("%.3f" % (time.time()-start)),Fore.LIGHTCYAN_EX)
         
         self.session.headers['x-language-locale'] = 'en'
         self.session.headers['referer'] = 'https://auth.opera.com/account/authenticate/signup'
@@ -98,7 +102,7 @@ class Opera:
     'captcha' : soln,
     'services': ['gmx']})
         if "429" in signUp.text:
-            Logger.Sprint("ERROR","Ratelimited On Signup!")
+            Logger.Sprint("ERROR","Ratelimited On Signup!",Fore.LIGHTRED_EX)
             return False
         if not signUp.status_code in [200,201,204]:
             Logger.Sprint("ERROR",f"Signup Error: {signUp.text}",Fore.LIGHTRED_EX)
@@ -156,7 +160,7 @@ class Opera:
         promoReq = self.request("POST",
                                 'https://discord.opr.gg/v2/direct-fulfillment', headers=headers)
 
-        if not "token" in promoReq.text:
+        if not "token" in promoReq.text or not promoReq.ok:
             Logger.Sprint("ERROR",f"Failed To Fetch Promo! Text: {promoReq.text} Code: {promoReq.status_code}",Fore.LIGHTRED_EX)
 
         promo = "https://discord.com/billing/partner-promotions/1180231712274387115/{}".format(promoReq.json()['token'])
