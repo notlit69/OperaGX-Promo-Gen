@@ -7,6 +7,7 @@ import capsolver
 import ctypes
 import time
 import string
+import secrets
 
 from concurrent.futures import ThreadPoolExecutor
 from colorama import Fore, Style,init
@@ -39,7 +40,7 @@ class Opera:
     def __init__(self,proxy) -> None:
         self.session = requests.session()
         self.session.proxies = proxy 
-        self.email = ''.join(random.choices(string.ascii_letters,k=10))+str(int(round(time.time())))+"@" + \
+        self.email = secrets.token_hex(10)+"@" + \
                         choice(['gmail.com','outlook.com','yahoo.com','hotmail.com'])
         self.user = self.email.split("@")[0]
         self.session.headers={
