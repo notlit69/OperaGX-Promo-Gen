@@ -1,4 +1,3 @@
-# IMPORTANT NOTICE : Please use this only if you're high class hindu. Refrain from using if you're low caste / sc / st / obc / muslim / any dharam other than Hindu.
 
 03-03-2024 : Uploaded new version.
 
